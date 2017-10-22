@@ -1,0 +1,11 @@
+{
+  "name": "serverhealthservices",
+  "version": "0.0.1",
+  "description": "A JS script to run in the background, monitor logs and send you reports on a configurable time period",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lilith Tundrus",
+  "license": "GPL-3.0"
+}
