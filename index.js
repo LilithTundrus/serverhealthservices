@@ -26,23 +26,24 @@ Notes: You MUST start this from the drive where /var/log/ dir is located!
 console.log(`Linux log monitor version ${ver} started at ${new Date().toISOString()}`);
 
 //checking for bad condition first (best way to do if statements)
-if(!isLinux()) {
+if (!isLinux()) {
     console.log('OS is NOT Linux, exiting');
     process.exit(1);
 } else {
     if (!isRoot()) {                                                    //if not root
         console.log('Script is NOT running as root');                   //debugging
-    
+
         //check if /var/log/ exists
         if (fs.existsSync('/var/log/') !== true) {
             console.log('/var/log does not exist!');
         } else {
             //read some files
+            //return log handler
             console.log('/var/log/ exists');
         }
     } else {
         console.log('Script is running as root!');                      //debugging
-    
+
     }
 }
 
