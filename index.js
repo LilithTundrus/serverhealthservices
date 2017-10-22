@@ -21,13 +21,16 @@ console.log(`Linux log monitor version ${ver} started at ${new Date().toISOStrin
 //checking for bad condition first (best way to do if statements)
 if (!isRoot()) {                                                    //if not root
     console.log('Script is NOT running as root');                   //debugging
+
+    //check if /var/log/ exists
+    if (fs.existsSync('/var/log/') !== true) {
+        console.log('/var/log does not exist!');
+    } else {
+        //read some files
+        console.log('/var/log/ exists');
+    }
 } else {
     console.log('Script is running as root!');                      //debugging
-    
-    //check if /var/log/ exists
-    if(!fs.existsSync('/var/log')) {
 
-    } else {
-        
-    }
 }
+console.log('Script ended');                                        //debugging
