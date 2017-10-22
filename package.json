@@ -7,5 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Lilith Tundrus",
-  "license": "GPL-3.0"
+  "license": "GPL-3.0",
+  "dependencies": {
+    "child-process-promise": "^2.2.1",
+    "nodemailer": "^4.2.0"
+  }
 }
