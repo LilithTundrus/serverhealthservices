@@ -17,3 +17,17 @@ const ver = config.ver;                                                 //script
 
 //script starts here:
 console.log(`Linux log monitor version ${ver} started at ${new Date().toISOString()}`);
+
+//checking for bad condition first (best way to do if statements)
+if (!isRoot()) {                                                    //if not root
+    console.log('Script is NOT running as root');                   //debugging
+} else {
+    console.log('Script is running as root!');                      //debugging
+    
+    //check if /var/log/ exists
+    if(!fs.existsSync('/var/log')) {
+
+    } else {
+        
+    }
+}
