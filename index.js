@@ -86,7 +86,8 @@ function logDirCheck() {
 //do stuff after all sanity checks are met
 function logHandler() {
     //read RHEL/CentOS secure (auth audit) logs
-    var logData = fs.readFileSync('/var/log/secure', 'utf-8');
     
+    var logData = fs.readFileSync('/var/log/secure', 'utf-8');
     console.log(logData);
+    fs.writeFileSync('./previousLogData.txt', logData);
 }
