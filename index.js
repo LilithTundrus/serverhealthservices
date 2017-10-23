@@ -37,20 +37,14 @@ if (!isLinux()) {
         console.log('Script is NOT running as root');                   //debugging
 
         //check if /var/log/ exists (sanity check)
-        if (fs.existsSync('/var/log/') !== true) {
-            console.log('/var/log/ does NOT exist!');
-        } else {
-            //read some files
-            //return log handler
-            console.log('/var/log/ exists');
-        }
+
     } else {
         console.log('Script is running as root!');                      //debugging
 
     }
 }
 
-console.log('Script ended');                                        //debugging
+console.log('Script ended');                                            //debugging
 
 
 /**
@@ -61,6 +55,16 @@ function isLinux() {
     if (os.type() !== 'linux') {
         return false;
     } else {
+        return true;
+    }
+}
+
+function logDirCheck() {
+    if (fs.existsSync('/var/log/') !== true) {
+        console.log('/var/log/ does NOT exist!');                       //debugging
+        return false;
+    } else {
+        console.log('/var/log/ exists');                                //debugging
         return true;
     }
 }
