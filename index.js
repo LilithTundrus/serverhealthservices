@@ -36,9 +36,9 @@ if (!isLinux()) {
     if (!isRoot()) {                                                    //if not root
         console.log('Script is NOT running as root');                   //debugging
 
-        //check if /var/log/ exists
+        //check if /var/log/ exists (sanity check)
         if (fs.existsSync('/var/log/') !== true) {
-            console.log('/var/log does not exist!');
+            console.log('/var/log/ does NOT exist!');
         } else {
             //read some files
             //return log handler
@@ -53,7 +53,6 @@ if (!isLinux()) {
 console.log('Script ended');                                        //debugging
 
 
-
 /**
  * check if OS is linux, otherwise we can't do anything
  * @returns {boolean}
@@ -64,4 +63,12 @@ function isLinux() {
     } else {
         return true;
     }
+}
+
+
+//do stuff after all sanity checks are met
+function logHandler() {
+    //read RHEL/CentOS secure (auth audit) logs
+    var test = fs.readFileSync('/var/log/secure');
+    console.log(test);
 }
