@@ -48,7 +48,8 @@ if (!isLinux()) {
             console.log('/var/log/ does NOT exist!');                   //debugging
             return process.exit(1);
         }
-        return logHandler();
+        setInterval(logHandler, 15 /* 60 */ * 1000);                    //every 10 minutes
+        
 
     }
 }
@@ -85,6 +86,7 @@ function logDirCheck() {
 //do stuff after all sanity checks are met
 function logHandler() {
     //read RHEL/CentOS secure (auth audit) logs
-    var test = fs.readFileSync('/var/log/secure', 'utf-8');
-    console.log(test);
+    var logData = fs.readFileSync('/var/log/secure', 'utf-8');
+    
+    console.log(logData);
 }
