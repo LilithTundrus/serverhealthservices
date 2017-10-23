@@ -35,11 +35,20 @@ if (!isLinux()) {
 } else {
     if (!isRoot()) {                                                    //if not root
         console.log('Script is NOT running as root');                   //debugging
+        if (logDirCheck() !== true) {
+            console.log('/var/log/ does NOT exist!');                   //debugging
+            return process.exit(1);
+        }
+        return logHandler();
 
-        //check if /var/log/ exists (sanity check)
 
     } else {
         console.log('Script is running as root!');                      //debugging
+        if (logDirCheck() !== true) {
+            console.log('/var/log/ does NOT exist!');                   //debugging
+            return process.exit(1);
+        }
+        return logHandler();
 
     }
 }
@@ -59,9 +68,12 @@ function isLinux() {
     }
 }
 
+/**
+ * check if /var/log/ exists (sanity check)
+ * @returns {boolean}
+ */
 function logDirCheck() {
     if (fs.existsSync('/var/log/') !== true) {
-        console.log('/var/log/ does NOT exist!');                       //debugging
         return false;
     } else {
         console.log('/var/log/ exists');                                //debugging
