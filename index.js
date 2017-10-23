@@ -61,7 +61,7 @@ console.log('Script ended');                                            //debugg
  * @returns {boolean}
  */
 function isLinux() {
-    if (os.type() !== 'linux') {
+    if (os.type() !== 'Linux') {
         return false;
     } else {
         return true;
