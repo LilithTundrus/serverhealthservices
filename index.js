@@ -48,14 +48,11 @@ if (!isLinux()) {
             console.log('/var/log/ does NOT exist!');                   //debugging
             return process.exit(1);
         }
+        //set up interval for log checks
         setInterval(logHandler, 15 /* 60 */ * 1000);                    //every 10 minutes
-
 
     }
 }
-
-console.log('Script ended');                                            //debugging
-
 
 /**
  * check if OS is linux, otherwise we can't do anything
