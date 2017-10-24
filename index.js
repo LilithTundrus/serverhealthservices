@@ -49,7 +49,7 @@ if (!isLinux()) {
             return process.exit(1);
         }
         setInterval(logHandler, 15 /* 60 */ * 1000);                    //every 10 minutes
-        
+
 
     }
 }
@@ -86,8 +86,9 @@ function logDirCheck() {
 //do stuff after all sanity checks are met
 function logHandler() {
     //read RHEL/CentOS secure (auth audit) logs
-    
     var logData = fs.readFileSync('/var/log/secure', 'utf-8');
     console.log(logData);
+
+    //if NEW logData doesn't equal the old data, send a report via email
     fs.writeFileSync('./previousLogData.txt', logData);
 }
