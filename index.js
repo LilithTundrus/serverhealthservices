@@ -40,7 +40,7 @@ if (!isLinux()) {
             console.log('/var/log/ does NOT exist!');                   //debugging
             return process.exit(1);
         }
-        return nonSULogHandler();
+        return nonSULogHandler();                                       //PLACEHOLDER
     } else {
         console.log('Script is running as root!');                      //debugging
         if (logDirCheck() !== true) {
@@ -48,8 +48,7 @@ if (!isLinux()) {
             return process.exit(1);
         }
         //set up interval for log checks
-        setInterval(nonSULogHandler, 15 /* 60 */ * 1000);
-
+        return nonSULogHandler();
     }
 }
 
@@ -83,5 +82,32 @@ function logDirCheck() {
 function nonSULogHandler() {
     //read RHEL/CentOS secure (auth audit) logs
     const tail = new Tail('/var/log/secure')
+    tail.on('line', (line) => {
+
+    })
     //if NEW logData doesn't equal the old data, send a report via email
+}
+
+
+function sendEmail(subject, message) {                                  //send an email given the args to remove the duplicate code between beta an normal checks
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: config.gmailSender,
+            pass: config.gmailPassword
+        }
+    });
+    mailOptions = {
+        from: config.gmailSender,
+        to: config.gmailReceiver,
+        subject: subject,
+        text: message
+    };
+    return transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
 }
