@@ -8,11 +8,13 @@ var util = require('util');                                             //for us
 var os = require('os');                                                 //for detecting if Linux
 var exec = require('child-process-promise').exec;                       //promise-wrapped shell command execution
 var nodemailer = require('nodemailer');                                 //for sending emails
+const Tail = require('nodejs-tail');                                    //for tailing files
 const ver = config.ver;                                                 //script version for debugging on deployments
 /*
 Notes: You MUST start this from the drive where /var/log/ dir is located!//TODO: detect which Linux OS: *bian or Arch or Cent/RHEL
 
 TODO: detect which Linux OS: *bian or Arch or Cent/RHEL
+TODO: figure out a better way of tracking file changes (maybe tail-node?)
 
 */
 // Script logical order
@@ -39,9 +41,7 @@ if (!isLinux()) {
             console.log('/var/log/ does NOT exist!');                   //debugging
             return process.exit(1);
         }
-        return logHandler();
-
-
+        return nonSULogHandler();
     } else {
         console.log('Script is running as root!');                      //debugging
         if (logDirCheck() !== true) {
@@ -49,7 +49,7 @@ if (!isLinux()) {
             return process.exit(1);
         }
         //set up interval for log checks
-        setInterval(logHandler, 15 /* 60 */ * 1000);                    //every 10 minutes
+        setInterval(nonSULogHandler, 15 /* 60 */ * 1000);
 
     }
 }
@@ -81,11 +81,8 @@ function logDirCheck() {
 
 
 //do stuff after all sanity checks are met
-function logHandler() {
+function nonSULogHandler() {
     //read RHEL/CentOS secure (auth audit) logs
-    var logData = fs.readFileSync('/var/log/secure', 'utf-8');
-    console.log(logData);
-
+    const tail = new Tail('/var/log/secure')
     //if NEW logData doesn't equal the old data, send a report via email
-    fs.writeFileSync('./previousLogData.txt', logData);
 }
