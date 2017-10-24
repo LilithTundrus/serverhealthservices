@@ -47,7 +47,7 @@ if (!isLinux()) {
             console.log('/var/log/ does NOT exist!');                   //debugging
             return process.exit(1);
         }
-        //set up interval for log checks
+        //tail the logfiles
         return nonSULogHandler();
     }
 }
@@ -80,14 +80,12 @@ function logDirCheck() {
 
 //do stuff after all sanity checks are met
 function nonSULogHandler() {
-    //read RHEL/CentOS secure (auth audit) logs
+    //read RHEL/CentOS secure (auth audit) logs using tail
     const tail = new Tail('/var/log/secure')
     tail.on('line', (line) => {
-
+        return sendEmail('Server report', line)
     })
-    //if NEW logData doesn't equal the old data, send a report via email
 }
-
 
 function sendEmail(subject, message) {                                  //send an email given the args to remove the duplicate code between beta an normal checks
     var transporter = nodemailer.createTransport({
