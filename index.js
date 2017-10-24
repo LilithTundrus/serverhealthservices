@@ -6,7 +6,6 @@ const config = require('./config');                                     //config
 var isRoot = require('./lib/isRootCheck.js');                           //check if process is being run as root
 var util = require('util');                                             //for using child-process-promise
 var os = require('os');                                                 //for detecting if Linux
-var exec = require('child-process-promise').exec;                       //promise-wrapped shell command execution
 var nodemailer = require('nodemailer');                                 //for sending emails
 const Tail = require('nodejs-tail');                                    //for tailing files
 const ver = config.ver;                                                 //script version for debugging on deployments
