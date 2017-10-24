@@ -85,6 +85,7 @@ function nonSULogHandler() {
     tail.on('line', (line) => {
         return sendEmail('Server report', line)
     })
+    tail.watch();
 }
 
 function sendEmail(subject, message) {                                  //send an email given the args to remove the duplicate code between beta an normal checks
@@ -95,7 +96,7 @@ function sendEmail(subject, message) {                                  //send a
             pass: config.gmailPassword
         }
     });
-    mailOptions = {
+    var mailOptions = {
         from: config.gmailSender,
         to: config.gmailReceiver,
         subject: subject,
