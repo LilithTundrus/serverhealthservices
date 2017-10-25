@@ -96,7 +96,7 @@ function sendEmail(subject, message) {                                  //send a
             pass: config.gmailPassword
         }
     });
-    var mailOptions = {
+    let mailOptions = {
         from: config.gmailSender,
         to: config.gmailReceiver,
         subject: subject,
