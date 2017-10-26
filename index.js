@@ -81,11 +81,29 @@ function logDirCheck() {
 //do stuff after all sanity checks are met
 function nonSULogHandler() {
     //read RHEL/CentOS secure (auth audit) logs using tail
-    const tail = new Tail('/var/log/secure')
+    const tail = new Tail('/var/log/secure');
+    var tailArray = [];
     tail.on('line', (line) => {
-        return sendEmail('Server report', line)
+        //return sendEmail('New Auth Activity', line)
+        //push tail line to array
+        tailArray.push(line);
     })
     tail.watch();
+
+    //every so often send an email with the array
+    setInterval(function () {
+        if (tailArray.length == 0) {
+            return;                                             //return, do nothing
+        }
+        sendEmail('New Auth Activity', tailArray)
+        tailArray = [];
+        return;
+        //clear the array
+
+
+    }, 10 /* 60 */ * 1000);                                      //every 10 minutes
+
+
 }
 
 function sendEmail(subject, message) {                                  //send an email given the args to remove the duplicate code between beta an normal checks
