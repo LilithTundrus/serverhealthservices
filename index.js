@@ -100,7 +100,6 @@ function nonSULogHandler() {
         return;
         //clear the array
 
-
     }, 10 /* 60 */ * 1000);                                      //every 10 minutes
 
 
