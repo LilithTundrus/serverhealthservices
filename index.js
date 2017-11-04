@@ -10,7 +10,7 @@ var nodemailer = require('nodemailer');                                 //for se
 const Tail = require('nodejs-tail');                                    //for tailing files
 const ver = config.ver;                                                 //script version for debugging on deployments
 /*
-Notes: You MUST start this from the drive where /var/log/ dir is located!//TODO: detect which Linux OS: *bian or Arch or Cent/RHEL
+Notes: You MUST start this from the drive where /var/log/ dir is located!
 
 TODO: detect which Linux OS: *bian or Arch or Cent/RHEL
 TODO: do more things with this
