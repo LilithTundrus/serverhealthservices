@@ -13,7 +13,7 @@ const ver = config.ver;                                                 //script
 Notes: You MUST start this from the drive where /var/log/ dir is located!//TODO: detect which Linux OS: *bian or Arch or Cent/RHEL
 
 TODO: detect which Linux OS: *bian or Arch or Cent/RHEL
-TODO: figure out a better way of tracking file changes (maybe tail-node?)
+TODO: do more things with this
 
 */
 // Script logical order
@@ -93,14 +93,14 @@ function nonSULogHandler() {
     //every so often send an email with the array
     setInterval(function () {
         if (tailArray.length == 0) {
-            return;                                             //return, do nothing
+            return;                                                     //return, do nothing
         }
         sendEmail('New Auth Activity', JSON.stringify(tailArray, null, 2))
-        tailArray = [];
+        tailArray = [];                                                 //clear the array
         return;
-        //clear the array
+        
 
-    }, 10 /* 60 */ * 1000);                                      //every 10 minutes
+    }, 10 /* 60 */ * 1000);                                             //every 10 minutes
 
 
 }
