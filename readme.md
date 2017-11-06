@@ -10,6 +10,6 @@ To configure the logs to watch. In the config file under exports.logLocations
 fill an array like so:
 ```
 ...
-exports.logLocations = ['/var/log/secure', '/var/log/']
+exports.logLocations = ['/var/log/secure', '/var/log/cron']
 ...
 ```
