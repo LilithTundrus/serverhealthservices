@@ -14,6 +14,8 @@ Notes: You MUST start this from the drive where /var/log/ dir is located!
 
 TODO: detect which Linux OS: *bian or Arch or Cent/RHEL
 TODO: do more things with this
+TODO: Extend logHandler to be generic
+TODO: include the log configuration as an array in config.js
 
 */
 // Script logical order
@@ -44,7 +46,7 @@ if (!isLinux()) {
             return process.exit(1);
         }
         //tail the logfiles
-        return nonSULogHandler();
+        return logHandler();
     }
 }
 
@@ -74,7 +76,8 @@ function logDirCheck() {
 }
 
 //do stuff after all sanity checks are met
-function nonSULogHandler() {
+function logHandler() {
+
     //read RHEL/CentOS secure (auth audit) logs using tail
     const tail = new Tail('/var/log/secure');
     var tailArray = [];
