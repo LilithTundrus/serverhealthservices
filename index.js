@@ -17,7 +17,7 @@ TODO: do more things with this
 
 */
 // Script logical order
-// check if host OS is in fact Linux
+// check if host OS is in fact Linux (sanity check)
 // check if run as sudo for access to specific logs
 // scope out /var/log, make sure it exists as a sanity check
 // read some files (using tail?)
@@ -35,12 +35,8 @@ if (!isLinux()) {
     process.exit(1);
 } else {
     if (!isRoot()) {                                                    //if not root
-        console.log('Script is NOT running as root');                   //debugging
-        if (logDirCheck() !== true) {
-            console.log('/var/log/ does NOT exist!');                   //debugging
-            return process.exit(1);
-        }
-        return nonSULogHandler();                                       //PLACEHOLDER
+        console.log('Script is must run as root to avoid log access issues');
+        process.exit(0);
     } else {
         console.log('Script is running as root!');                      //debugging
         if (logDirCheck() !== true) {
@@ -77,7 +73,6 @@ function logDirCheck() {
     }
 }
 
-
 //do stuff after all sanity checks are met
 function nonSULogHandler() {
     //read RHEL/CentOS secure (auth audit) logs using tail
@@ -86,6 +81,7 @@ function nonSULogHandler() {
     tail.on('line', (line) => {
         //return sendEmail('New Auth Activity', line)
         //push tail line to array
+        console.log(line);                                              //debugging
         tailArray.push(line);
     })
     tail.watch();
@@ -98,7 +94,7 @@ function nonSULogHandler() {
         sendEmail('New Auth Activity', JSON.stringify(tailArray.join('\n'), null, 2))
         tailArray = [];                                                 //clear the array
         return;
-        
+
 
     }, 10 /* 60 */ * 1000);                                             //every 10 minutes
 
