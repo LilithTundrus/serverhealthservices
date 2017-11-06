@@ -95,7 +95,7 @@ function nonSULogHandler() {
         if (tailArray.length == 0) {
             return;                                                     //return, do nothing
         }
-        sendEmail('New Auth Activity', JSON.stringify(tailArray, null, 2))
+        sendEmail('New Auth Activity', JSON.stringify(tailArray.join('\n'), null, 2))
         tailArray = [];                                                 //clear the array
         return;
         
