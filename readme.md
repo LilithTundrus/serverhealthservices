@@ -6,13 +6,10 @@ Note: you MUST start this script on the server where the /var/log folder is
 located
 
 ## Configuring the logs to be watched
-To configure the logs to watch. In the script's folder include a file named 
-"logList.txt" with each log file name to be followed on a new like like so:
-
-### logList.txt:
-
+To configure the logs to watch. In the config file under exports.logLocations
+fill an array like so:
 ```
-/var/log/demsg
-/var/log/secure
-...
+    ...
+exports.logLocations = ['/var/log/secure', '/var/log/']
+    ...
 ```
