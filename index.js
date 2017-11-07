@@ -9,6 +9,7 @@ var os = require('os');                                                 //for de
 var nodemailer = require('nodemailer');                                 //for sending emails
 const Tail = require('nodejs-tail');                                    //for tailing files
 const ver = config.ver;                                                 //script version for debugging on deployments
+const logLocations = config.logLocationsArray;
 /*
 Notes: You MUST start this from the drive where /var/log/ dir is located!
 
@@ -37,7 +38,7 @@ if (!isLinux()) {
     process.exit(1);
 } else {
     if (!isRoot()) {                                                    //if not root
-        console.log('Script is must run as root to avoid log access issues');
+        console.log('Error: Script is must be run as root to avoid log access issues');
         process.exit(0);
     } else {
         console.log('Script is running as root!');                      //debugging
@@ -77,7 +78,9 @@ function logDirCheck() {
 
 //do stuff after all sanity checks are met
 function logHandler() {
-
+    logLocations.forEach((logLocation, index) => {
+        console.log(logLocation);
+    })
     //read RHEL/CentOS secure (auth audit) logs using tail
     const tail = new Tail('/var/log/secure');
     var tailArray = [];
