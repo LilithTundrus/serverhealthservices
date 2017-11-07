@@ -30,8 +30,7 @@ TODO: include the log configuration as an array in config.js
 
 //script starts here:
 console.log(`Linux log monitor version ${ver} started at ${new Date().toISOString()}`);
-
-if (!isLinux()) {
+if (!isLinux()) {                                                       //check for the wrong outcome FIRST for less code blocks
     console.log('OS is NOT Linux, exiting');
     process.exit(1);
 } else {
@@ -79,7 +78,7 @@ function logHandler() {
     logLocations.forEach((logLocation, index) => {
         console.log(logLocation);                                       //debugging
         //ensure logLocation exists
-        if(fs.existsSync(logLocation) !== true) {
+        if (fs.existsSync(logLocation) !== true) {
             console.log(`Error: ${logLocation} is not a log file that exists in /var/log`);
             logLocation.slice(index);
             console.log(logLocation.length)                             //debugging
