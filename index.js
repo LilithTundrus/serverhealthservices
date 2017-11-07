@@ -1,4 +1,3 @@
-//Linux log / email /health graph here
 'use strict';
 const fs = require('fs');                                               //fs will be used to read system files
 const config = require('./config');                                     //config file for script (file locations)
@@ -10,17 +9,17 @@ const Tail = require('nodejs-tail');                                    //for ta
 const ver = config.ver;                                                 //script version for debugging on deployments
 const logLocations = config.logLocationsArray;
 /*
+Linux log / email / health graph thing...
+
 Notes: You MUST start this from the drive where /var/log/ dir is located!
 
-TODO: detect which Linux OS: *bian or Arch or Cent/RHEL
 TODO: do more things with this
 TODO: Extend logHandler to be generic
 TODO: include the log configuration as an array in config.js
 
 */
 // Script logical order
-// check if host OS is in fact Linux (sanity check)
-// check if run as sudo for access to specific logs
+// check if host OS is in fact Linux and run as sudo (sanity check)
 // scope out /var/log, make sure it exists as a sanity check
 // read some files (using tail?)
 // determine differences since last check
@@ -38,13 +37,11 @@ if (!isLinux()) {                                                       //check 
         console.log('Error: Script is must be run as root to avoid log access issues');
         process.exit(1);
     } else {
-        console.log('Script is running as root!');                      //debugging
         if (logDirCheck() !== true) {
-            console.log('/var/log/ does NOT exist!');                   //debugging
+            console.log('/var/log/ does NOT exist! Exiting...');        //debugging
             return process.exit(1);
         }
-        //tail the logfiles
-        return logHandler();
+        return logHandler();                                            //tail the logfiles
     }
 }
 
@@ -77,8 +74,7 @@ function logDirCheck() {
 function logHandler() {
     logLocations.forEach((logLocation, index) => {
         console.log(logLocation);                                       //debugging
-        //ensure logLocation exists
-        if (fs.existsSync(logLocation) !== true) {
+        if (fs.existsSync(logLocation) !== true) {                      //ensure logLocation exists (sanity check)
             console.log(`Error: ${logLocation} is not a log file that exists in /var/log`);
             logLocation.slice(index);
             console.log(logLocation.length)                             //debugging
