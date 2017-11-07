@@ -17,14 +17,15 @@ TODO: do more things with this
 TODO: Extend logHandler to be generic
 TODO: include the log configuration as an array in config.js
 
+Script logical order:
+- check if host OS is in fact Linux and run as sudo (sanity check)
+- scope out /var/log, make sure it exists as a sanity check
+- read log files using tail that are specified in config file
+- determine differences since last check
+- if there are differences send an email to sysAdmin periodically
+- optional: create an activity graph
+
 */
-// Script logical order
-// check if host OS is in fact Linux and run as sudo (sanity check)
-// scope out /var/log, make sure it exists as a sanity check
-// read some files (using tail?)
-// determine differences since last check
-// if there are differences send an email to sysAdmin periodically
-// optional: create an activity graph
 
 
 //script starts here:
