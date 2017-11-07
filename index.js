@@ -1,5 +1,4 @@
 //Linux log / email /health graph here
-
 'use strict';
 const fs = require('fs');                                               //fs will be used to read system files
 const config = require('./config');                                     //config file for script (file locations)
@@ -25,21 +24,20 @@ TODO: include the log configuration as an array in config.js
 // scope out /var/log, make sure it exists as a sanity check
 // read some files (using tail?)
 // determine differences since last check
-// if there are differences send an email to sysAdmin
+// if there are differences send an email to sysAdmin periodically
 // optional: create an activity graph
 
 
 //script starts here:
 console.log(`Linux log monitor version ${ver} started at ${new Date().toISOString()}`);
 
-//checking for bad condition first (best way to do if statements)
 if (!isLinux()) {
     console.log('OS is NOT Linux, exiting');
     process.exit(1);
 } else {
     if (!isRoot()) {                                                    //if not root
         console.log('Error: Script is must be run as root to avoid log access issues');
-        process.exit(0);
+        process.exit(1);
     } else {
         console.log('Script is running as root!');                      //debugging
         if (logDirCheck() !== true) {
@@ -79,31 +77,39 @@ function logDirCheck() {
 //do stuff after all sanity checks are met
 function logHandler() {
     logLocations.forEach((logLocation, index) => {
-        console.log(logLocation);
-    })
-    //read RHEL/CentOS secure (auth audit) logs using tail
-    const tail = new Tail('/var/log/secure');
-    var tailArray = [];
-    tail.on('line', (line) => {
-        //return sendEmail('New Auth Activity', line)
-        //push tail line to array
-        console.log(line);                                              //debugging
-        tailArray.push(line);
-    })
-    tail.watch();
-
-    //every so often send an email with the array
-    setInterval(function () {
-        if (tailArray.length == 0) {
-            return;                                                     //return, do nothing
+        console.log(logLocation);                                       //debugging
+        //ensure logLocation exists
+        if(fs.existsSync(logLocation) !== true) {
+            console.log(`Error: ${logLocation} is not a log file that exists in /var/log`);
+            logLocation.slice(index);
+            console.log(logLocation.length)                             //debugging
         }
-        sendEmail('New Auth Activity', JSON.stringify(tailArray.join('\n'), null, 2))
-        tailArray = [];                                                 //clear the array
-        return;
+        const tail = new Tail('/var/log/secure');
+        var tailArray = [];
+        tail.on('line', (line) => {
+            //return sendEmail('New Auth Activity', line)
+            //push tail line to array
+            console.log(line);                                              //debugging
+            tailArray.push(line);
+        })
+        tail.watch();
+
+        //every so often send an email with the array
+        setInterval(function () {
+            if (tailArray.length == 0) {
+                return;                                                     //return, do nothing
+            }
+            sendEmail('New Auth Activity', JSON.stringify(tailArray.join('\n'), null, 2))
+            tailArray = [];                                                 //clear the array
+            return;
+        }, 10 /* 60 */ * 1000);                                             //every 10 minutes
 
 
-    }, 10 /* 60 */ * 1000);                                             //every 10 minutes
+    })
 
+}
+
+function tailConstruct(fileToTail) {
 
 }
 
