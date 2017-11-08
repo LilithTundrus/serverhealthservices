@@ -1,6 +1,6 @@
 {
   "name": "serverhealthservices",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A JS script to run in the background, monitor logs and send you reports on a configurable time period",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,6 @@
   "author": "Lilith Tundrus",
   "license": "GPL-3.0",
   "dependencies": {
-    "child-process-promise": "^2.2.1",
     "nodejs-tail": "^1.0.2",
     "nodemailer": "^4.2.0"
   }
