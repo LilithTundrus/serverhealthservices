@@ -16,6 +16,7 @@ Notes: You MUST start this from the drive where /var/log/ dir is located!
 TODO: do more things with this
 TODO: Extend logHandler to be generic
 TODO: include the log configuration as an array in config.js
+TODO: fix an invalid log location to not cause all items after to be removed!
 
 Script logical order:
 - check if host OS is in fact Linux and run as sudo (sanity check)
@@ -78,12 +79,12 @@ function logHandler() {
             logLocations.splice(index);
             return;
         }
-        const tail = new Tail('/var/log/secure');
+        const tail = new Tail(logLocation);
         var tailArray = [];
         tail.on('line', (line) => {
             //return sendEmail('New Auth Activity', line)
             //push tail line to array
-            console.log(line);                                              //debugging
+            console.log(`${logLocation} new line: ${line}`);            //debugging
             tailArray.push(line);
         })
         tail.watch();
@@ -91,12 +92,12 @@ function logHandler() {
         //every so often send an email with the array
         setInterval(function () {
             if (tailArray.length == 0) {
-                return;                                                     //return, do nothing
+                return;                                                 //return, do nothing
             }
             sendEmail('New Auth Activity', JSON.stringify(tailArray.join('\n'), null, 2))
-            tailArray = [];                                                 //clear the array
+            tailArray = [];                                             //clear the array
             return;
-        }, 10 /* 60 */ * 1000);                                             //every 10 minutes
+        }, 10 /* 60 */ * 1000);                                         //every 10 minutes
 
 
     });
