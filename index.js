@@ -104,10 +104,6 @@ function logHandler() {
 
 }
 
-function tailConstruct(fileToTail) {
-
-}
-
 function sendEmail(subject, message) {                                  //send an email given the args to remove the duplicate code between beta an normal checks
     var transporter = nodemailer.createTransport({
         service: 'gmail',
