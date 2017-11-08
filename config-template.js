@@ -1,7 +1,7 @@
 //put configuration variables here as exports
 
 //arbitrary script version -- you don't have to change this
-exports.ver = '0.0.1';
+exports.ver = '0.1.0';
 
 //vars used for nodemailer to send server reports to a set email address
 exports.gmailSender = 'GMAIL_BOT_HERE'
