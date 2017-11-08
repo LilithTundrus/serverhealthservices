@@ -94,7 +94,9 @@ function logHandler() {
             if (tailArray.length == 0) {
                 return;                                                 //return, do nothing
             }
-            sendEmail('New Auth Activity', JSON.stringify(tailArray.join('\n'), null, 2))
+            //beautify the log data:
+            
+            sendEmail(`New Log Activity at ${new Date().toISOString}`, logLocation + ':\n\n' + tailArray.join('\n'), null, 2))
             tailArray = [];                                             //clear the array
             return;
         }, 10 /* 60 */ * 1000);                                         //every 10 minutes
