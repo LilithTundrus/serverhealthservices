@@ -95,8 +95,7 @@ function logHandler() {
                 return;                                                 //return, do nothing
             }
             //beautify the log data:
-            
-            sendEmail(`New Log Activity at ${new Date().toISOString}`, logLocation + ':\n\n' + tailArray.join('\n'), null, 2))
+            sendEmail(`New Log Activity at ${new Date().toISOString}`, logLocation + ':\n\n' + tailArray.join('\n'));
             tailArray = [];                                             //clear the array
             return;
         }, 10 /* 60 */ * 1000);                                         //every 10 minutes
