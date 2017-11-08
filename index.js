@@ -26,8 +26,6 @@ Script logical order:
 - optional: create an activity graph
 
 */
-
-
 //script starts here:
 console.log(`Linux log monitor version ${ver} started at ${new Date().toISOString()}`);
 if (!isLinux()) {                                                       //check for the wrong outcome FIRST for less code blocks
@@ -76,9 +74,9 @@ function logHandler() {
     logLocations.forEach((logLocation, index) => {
         console.log(logLocation);                                       //debugging
         if (fs.existsSync(logLocation) !== true) {                      //ensure logLocation exists (sanity check)
-            console.log(`Error: ${logLocation} is not a log file that exists in /var/log`);
-            logLocation.slice(index);
-            console.log(logLocation.length)                             //debugging
+            console.log(`\nError: ${logLocation} is not a log file that exists in /var/log, removing from tail watch list`);
+            logLocations.splice(index);
+            return;
         }
         const tail = new Tail('/var/log/secure');
         var tailArray = [];
@@ -101,7 +99,7 @@ function logHandler() {
         }, 10 /* 60 */ * 1000);                                             //every 10 minutes
 
 
-    })
+    });
 
 }
 
