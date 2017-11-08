@@ -10,7 +10,6 @@ const ver = config.ver;                                                 //script
 const logLocations = config.logLocationsArray;
 /*
 Linux log / email / health graph thing...
-
 Notes: You MUST start this from the drive where /var/log/ dir is located!
 
 TODO: do more things with this (graphs, insight/etc...)
@@ -23,8 +22,8 @@ Script logical order:
 - determine differences since last check
 - if there are differences send an email to sysAdmin periodically
 - optional: create an activity graph
-
 */
+
 //script starts here:
 console.log(`Linux log monitor version ${ver} started at ${new Date().toISOString()}`);
 if (!isLinux()) {                                                       //check for the wrong outcome FIRST for less code blocks
