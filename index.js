@@ -14,6 +14,7 @@ Notes: You MUST start this from the drive where /var/log/ dir is located!
 
 TODO: do more things with this (graphs, insight/etc...)
 TODO: Extend logHandler to be generic
+TODO: get/and log process list daily
 
 Script logical order:
 - check if host OS is in fact Linux and run as sudo (sanity check)
@@ -93,7 +94,7 @@ function logHandler() {
                 return;                                                 //return, do nothing
             }
             //beautify the log data and send
-            sendEmail(`New Log Activity at ${new Date().toISOString}`, logLocation + ':\n\n' + tailArray.join('\n'));
+            sendEmail(`New Log Activity at ${new Date().toISOString()}`, logLocation + ':\n\n' + tailArray.join('\n'));
             tailArray = [];                                             //clear the array for the next interval
             return;
         }, 10 * 60 * 1000);                                            //every 10 minutes
